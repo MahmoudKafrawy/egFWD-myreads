@@ -3,24 +3,48 @@ import Book from "../components/Book";
 import { Link } from "react-router-dom";
 import { getAll, update } from "../BooksAPI";
 
-const Home = () => {
-  const [books, setBooks] = useState([]);
-  useEffect(async () => {
-    const data = await getAll();
-    console.log(data);
-    setBooks(data);
-  }, []);
+const Home = ({ books, setBooks, handleChange }) => {
+  // const [books, setBooks] = useState([]);
+  // useEffect(async () => {
+  //   const data = await getAll();
+  //   setBooks(data);
+  // }, []);
 
-  const handleChange = async (id, shelf) => {
-    console.log(id, shelf);
-    const updateBook = await update(id, shelf);
-    const data = await getAll();
-    setBooks(data);
+  // const handleChange = async (book, shelf) => {
+  //   await update(book, shelf);
+  //   book.shelf = shelf;
+  //   const filterdBook = books.filter((b) => b.id !== book.id).concat(book);
+  //   setBooks(filterdBook);
+
+  //   // const updateBook = await update(book, shelf);
+  //   // const data = await getAll();
+  //   // setBooks(data);
+  // };
+
+  // const currentlyReadingBooks = books.filter((book) => book.shelf === "currentlyReading");
+  // const wantToReadBooks = books.filter((book) => book.shelf === "wantToRead");
+  // const readBooks = books.filter((book) => book.shelf === "read");
+
+  // const filter = (books) => {
+  //   (shelf) => {
+  //     books.shelf((b) => b.shelf === shelf);
+  //   };
+  // };
+  // console.log(arguments);
+
+  const filter = function (books) {
+    return function (shelf) {
+      return books.filter(function (b) {
+        return b.shelf === shelf;
+      });
+    };
   };
 
-  const currentlyReadingBooks = books.filter((book) => book.shelf === "currentlyReading");
-  const wantToReadBooks = books.filter((book) => book.shelf === "wantToRead");
-  const readBooks = books.filter((book) => book.shelf === "read");
+  const filterBy = filter(books);
+
+  const wantToRead = filterBy("wantToRead");
+  const currentlyReading = filterBy("currentlyReading");
+  const read = filterBy("read");
 
   return (
     <div className="app">
@@ -34,8 +58,8 @@ const Home = () => {
               <h2 className="bookshelf-title">Currently Reading</h2>
               <div className="bookshelf-books">
                 <ol className="books-grid">
-                  {currentlyReadingBooks.length > 0 ? (
-                    currentlyReadingBooks.map((book) => (
+                  {currentlyReading.length > 0 ? (
+                    currentlyReading.map((book) => (
                       <li key={book.id}>
                         <Book
                           book={book}
@@ -56,8 +80,8 @@ const Home = () => {
               <h2 className="bookshelf-title">Want to Read</h2>
               <div className="bookshelf-books">
                 <ol className="books-grid">
-                  {wantToReadBooks.length > 0 ? (
-                    wantToReadBooks.map((book) => (
+                  {wantToRead.length > 0 ? (
+                    wantToRead.map((book) => (
                       <li key={book.id}>
                         <Book
                           book={book}
@@ -78,8 +102,8 @@ const Home = () => {
               <h2 className="bookshelf-title">Read</h2>
               <div className="bookshelf-books">
                 <ol className="books-grid">
-                  {readBooks.length > 0 ? (
-                    readBooks.map((book) => (
+                  {read.length > 0 ? (
+                    read.map((book) => (
                       <li key={book.id}>
                         <Book
                           book={book}

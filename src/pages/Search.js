@@ -4,7 +4,7 @@ import { update } from "../BooksAPI";
 import { search } from "../BooksAPI";
 import Book from "../components/Book";
 import { Link } from "react-router-dom";
-const Search = () => {
+const Search = ({ handleChange }) => {
   const [query, setQuery] = useState("");
   const [books, setBooks] = useState([]);
 
@@ -19,10 +19,10 @@ const Search = () => {
     }
   }, [query]);
 
-  const handleChange = async (id, shelf) => {
-    console.log(id, shelf);
-    const updateBook = await update(id, shelf);
-  };
+  // const handleChange = async (id, shelf) => {
+  //   console.log(id, shelf);
+  //   const updateBook = await update(id, shelf);
+  // };
 
   return (
     <div className="search-books">

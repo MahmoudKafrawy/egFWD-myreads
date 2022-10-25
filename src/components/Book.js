@@ -10,7 +10,7 @@ const Book = ({ book, handleChange }) => {
           style={{
             width: 128,
             height: 193,
-            backgroundImage: `url(${book.imageLinks.thumbnail})`,
+            backgroundImage: `url(${book.imageLinks?.thumbnail})`,
           }}
         >
           <div className="book-cover-hover">
@@ -18,7 +18,7 @@ const Book = ({ book, handleChange }) => {
           </div>
         </div>
         <div className="book-shelf-changer">
-          <select onChange={(e) => handleChange(book, e.target.value)}>
+          <select defaultValue={book.shelf} onChange={(e) => handleChange(book, e.target.value)}>
             <option value="none" disabled>
               Move to...
             </option>
@@ -35,4 +35,4 @@ const Book = ({ book, handleChange }) => {
   );
 };
 
-export default Book;
+export default React.memo(Book);
