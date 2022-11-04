@@ -1,23 +1,25 @@
 import { useEffect, useState } from "react";
 import { update } from "../BooksAPI";
-
 import { search } from "../BooksAPI";
 import Book from "../components/Book";
 import { Link } from "react-router-dom";
+import useDebounce from "./hooks/useDebounce";
+
 const Search = ({ handleChange }) => {
   const [query, setQuery] = useState("");
   const [books, setBooks] = useState([]);
+  const debounceValue = useDebounce(query, 300);
 
   useEffect(async () => {
     if (query.length > 0) {
       const data = await search(query.toLowerCase());
-      if (data.length > 2) {
+      if (data.length > 1) {
         setBooks(data);
       }
     } else {
       setBooks([]);
     }
-  }, [query]);
+  }, [debounceValue]);
 
   // const handleChange = async (id, shelf) => {
   //   console.log(id, shelf);
