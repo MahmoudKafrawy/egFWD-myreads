@@ -28,7 +28,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home books={books} setBooks={setBooks} handleChange={handleChange} />} />
-        <Route path="/search" element={<Search handleChange={handleChange} />} />
+        <Route path="/search" element={<Search books={books} handleChange={handleChange} />} />
         <Route path="/book/:id" element={<BookDetails />} />
       </Routes>
     </BrowserRouter>

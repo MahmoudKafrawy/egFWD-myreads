@@ -35,4 +35,4 @@ const Book = ({ book, handleChange }) => {
   );
 };
 
-export default React.memo(Book);
+export default Book;

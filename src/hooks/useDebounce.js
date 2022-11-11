@@ -10,7 +10,6 @@ const useDebounce = (value, delay) => {
 
     return () => {
       clearTimeout(timeOut);
-      console.log("deleted");
     };
   }, [value]);
 
